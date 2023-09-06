@@ -6,6 +6,7 @@ package Clases;
 
 import Paneles_principales.Principal;
 import java.net.UnknownHostException;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.sql.SQLException;
 
 /**
@@ -18,6 +19,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException, UnknownHostException {
+        FlatLightLaf.setup();
         try {
             
             conexion.Conectar();

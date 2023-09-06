@@ -19,7 +19,7 @@ import java.sql.SQLException;
  */
 public class Conexion {
     
-     public String user = "sa";
+    public String user = "sa";
     public String pass = "123";
     public java.sql.Statement s;
     public ResultSet resultado;
