@@ -6,6 +6,7 @@ package Paneles_rotativos;
 
 import Clases.Peticiones;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class Venta extends javax.swing.JPanel {
         }
 
         tabla_venta.setModel(modelo);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,9 +75,11 @@ public class Venta extends javax.swing.JPanel {
     private void initComponents() {
 
         descipcion_p = new javax.swing.JTextField();
-        b_buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_venta = new javax.swing.JTable();
+        j_buscar = new javax.swing.JLabel();
+        j_vender = new javax.swing.JLabel();
+        cantidad_vender = new javax.swing.JTextField();
 
         descipcion_p.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -87,16 +91,9 @@ public class Venta extends javax.swing.JPanel {
                 descipcion_pActionPerformed(evt);
             }
         });
-
-        b_buscar.setText("Buscar");
-        b_buscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                b_buscarMousePressed(evt);
-            }
-        });
-        b_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_buscarActionPerformed(evt);
+        descipcion_p.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                descipcion_pKeyTyped(evt);
             }
         });
 
@@ -113,30 +110,84 @@ public class Venta extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tabla_venta);
 
+        j_buscar.setText("Buscar");
+        j_buscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                j_buscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                j_buscarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                j_buscarMousePressed(evt);
+            }
+        });
+
+        j_vender.setText("Vender");
+        j_vender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                j_venderMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                j_venderMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                j_venderMousePressed(evt);
+            }
+        });
+
+        cantidad_vender.setText("Ingrese la cantidad que desea vender");
+        cantidad_vender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cantidad_venderMousePressed(evt);
+            }
+        });
+        cantidad_vender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidad_venderActionPerformed(evt);
+            }
+        });
+        cantidad_vender.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cantidad_venderKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(descipcion_p, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(b_buscar)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(j_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cantidad_vender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(j_vender))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(descipcion_p, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b_buscar))
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(descipcion_p, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(j_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(cantidad_vender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(j_vender)))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,15 +195,13 @@ public class Venta extends javax.swing.JPanel {
    
     }//GEN-LAST:event_descipcion_pActionPerformed
 
-    private void b_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_buscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_b_buscarActionPerformed
+    private void descipcion_pMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descipcion_pMousePressed
+              
+    }//GEN-LAST:event_descipcion_pMousePressed
 
-    private void b_buscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_buscarMousePressed
+    private void j_buscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_buscarMousePressed
         if (descipcion_p.getText().isEmpty()){
-        JOptionPane optionPane = new JOptionPane("Ingrese algo para buscar", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-        optionPane.show();
-          
+            JOptionPane.showMessageDialog(null, "Debe escribir alguna parte de la descripcion que desea buscar");
       }else {
             String descripcion = descipcion_p.getText();
         
@@ -162,18 +211,90 @@ public class Venta extends javax.swing.JPanel {
             Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
-        
-    }//GEN-LAST:event_b_buscarMousePressed
+    }//GEN-LAST:event_j_buscarMousePressed
 
-    private void descipcion_pMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descipcion_pMousePressed
-              
-    }//GEN-LAST:event_descipcion_pMousePressed
+    private void j_buscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_buscarMouseEntered
+        j_buscar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_j_buscarMouseEntered
+
+    private void j_buscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_buscarMouseExited
+        j_buscar.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_j_buscarMouseExited
+
+    private void cantidad_venderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidad_venderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cantidad_venderActionPerformed
+
+    private void j_venderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_venderMousePressed
+        if(cantidad_vender.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad valida");
+        }else{
+            String cantidad_s = cantidad_vender.getText();
+            int cantidad_v = Integer.parseInt(cantidad_s);
+            int filaSeleccionada = tabla_venta.getSelectedRow();
+            
+        if (filaSeleccionada != -1) { // Verifica si se ha seleccionado una fila
+            DefaultTableModel modelo = (DefaultTableModel) tabla_venta.getModel();
+    
+            // Obtén los valores de la fila seleccionada
+            String descripcion = modelo.getValueAt(filaSeleccionada, 1).toString(); // Columna "Descripción"
+            int cantidad = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 2).toString()); // Columna "Cantidad"
+    
+             // Haz algo con la descripción y la cantidad
+            if(cantidad < cantidad_v){
+                JOptionPane.showMessageDialog(null, "No cuenta con ese stock, su stock de " + descripcion + " es de " + cantidad + "." );
+                cantidad_vender.setText("");
+            }else{
+                try {
+                    peticiones.modificainventario(cantidad_s,descripcion);
+                    tablaventa(descipcion_p.getText());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            // No se seleccionó ninguna fila
+            JOptionPane.showMessageDialog(null, "Seleccione un producto de la tabla");
+}
+            
+        }
+        
+        
+    }//GEN-LAST:event_j_venderMousePressed
+
+    private void cantidad_venderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cantidad_venderMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cantidad_venderMousePressed
+
+    private void descipcion_pKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descipcion_pKeyTyped
+      
+    }//GEN-LAST:event_descipcion_pKeyTyped
+
+    private void cantidad_venderKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidad_venderKeyTyped
+     int key = evt.getKeyChar();
+      
+      boolean num = key >= 48 && key <= 57;
+      
+      if(!num){
+          evt.consume();
+      }
+    }//GEN-LAST:event_cantidad_venderKeyTyped
+
+    private void j_venderMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_venderMouseEntered
+        j_vender.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_j_venderMouseEntered
+
+    private void j_venderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_venderMouseExited
+        j_vender.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_j_venderMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_buscar;
+    private javax.swing.JTextField cantidad_vender;
     private javax.swing.JTextField descipcion_p;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel j_buscar;
+    private javax.swing.JLabel j_vender;
     private javax.swing.JTable tabla_venta;
     // End of variables declaration//GEN-END:variables
 }

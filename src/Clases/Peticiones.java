@@ -37,5 +37,10 @@ public class Peticiones {
         
     }
     
+    public void modificainventario(String cantidad,String descripcion){
+        Main.conexion.EjecutarOperacionSQL("UPDATE productos SET cantidad = cantidad - " +cantidad +" WHERE descripcion = '"+ descripcion +"'");
+
+    }
+    
     
 }
