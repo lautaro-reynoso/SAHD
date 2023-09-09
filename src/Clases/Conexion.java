@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class Conexion {
     
     public String user = "sa";
-    public String pass = "123";
+    public String pass = "holajuan1";
     public java.sql.Statement s;
     public ResultSet resultado;
     public Connection conexion = null;
@@ -65,7 +65,7 @@ public class Conexion {
         return resultado;
     }
 
-    public int EjecutarOperacion(String sql) {
+    public int EjecutarOperacionSQL(String sql) {
         int respuesta = 0;
         try {
             respuesta = this.s.executeUpdate(sql);

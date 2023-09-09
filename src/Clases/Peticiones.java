@@ -29,6 +29,13 @@ public class Peticiones {
         
     }
     
+    public ResultSet buscainventario (String str){
+        
+        String sql = "SELECT * FROM productos WHERE descripcion LIKE '" +str+"%'";
+
+       return Main.conexion.EjecutarConsultaSQL(sql);
+        
+    }
     
     
 }

@@ -5,19 +5,33 @@
 package Paneles_principales;
 
 import Paneles_rotativos.Inventario;
+import Paneles_rotativos.Venta;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
  *
  * @author lautaro
  */
+
+
 public class Principal extends javax.swing.JFrame {
     
-    Inventario inventario = new Inventario();
+    Inventario inventario;
+    Venta venta;
+            
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public Principal(){
+        try {
+            this.inventario = new Inventario();
+            this.venta = new Venta();
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         MostrarPanel(inventario);
         boton_inventario.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
@@ -47,6 +61,7 @@ public class Principal extends javax.swing.JFrame {
         boton_presupuestos = new javax.swing.JLabel();
         boton_usuarios = new javax.swing.JLabel();
         boton_caja = new javax.swing.JLabel();
+        boton_venta = new javax.swing.JLabel();
         contenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,6 +91,15 @@ public class Principal extends javax.swing.JFrame {
         boton_caja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         boton_caja.setText("CAJA");
 
+        boton_venta.setForeground(new java.awt.Color(0, 46, 15));
+        boton_venta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        boton_venta.setText("VENTA");
+        boton_venta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                boton_ventaMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -84,6 +108,10 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(boton_presupuestos, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
             .addComponent(boton_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(boton_caja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(boton_venta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +124,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(boton_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boton_caja, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(384, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boton_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(333, Short.MAX_VALUE))
         );
 
         contenido.setMinimumSize(new java.awt.Dimension(900, 600));
@@ -131,6 +161,10 @@ public class Principal extends javax.swing.JFrame {
         boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_inventarioMousePressed
+
+    private void boton_ventaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ventaMousePressed
+        MostrarPanel(venta);
+    }//GEN-LAST:event_boton_ventaMousePressed
     
     
     
@@ -140,6 +174,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel boton_inventario;
     private javax.swing.JLabel boton_presupuestos;
     private javax.swing.JLabel boton_usuarios;
+    private javax.swing.JLabel boton_venta;
     private javax.swing.JPanel contenido;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
