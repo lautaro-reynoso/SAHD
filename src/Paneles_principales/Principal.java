@@ -94,6 +94,7 @@ public class Principal extends javax.swing.JFrame {
         boton_venta.setForeground(new java.awt.Color(0, 46, 15));
         boton_venta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         boton_venta.setText("VENTA");
+        boton_venta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         boton_venta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 boton_ventaMousePressed(evt);
@@ -160,10 +161,17 @@ public class Principal extends javax.swing.JFrame {
         boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_venta.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_inventarioMousePressed
 
     private void boton_ventaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ventaMousePressed
         MostrarPanel(venta);
+        boton_venta.setBackground(new java.awt.Color(0, 204, 145));
+        boton_venta.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
+        boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_inventario.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_ventaMousePressed
     
     

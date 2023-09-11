@@ -41,5 +41,11 @@ public class Peticiones {
         
     }
     
+    public int cargarproducto (String codigo, String descripcion, int cantidad, float precio){
+        
+        String sql = "INSERT INTO productos (descripcion, cantidad, precio, codigo)" + "VALUES('" + descripcion + "','" + cantidad + "','" + precio + "','" + codigo + "')";
+        
+        return Main.conexion.EjecutarOperacionSQL(sql);
+    }
     
 }

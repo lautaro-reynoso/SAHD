@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class Conexion {
     
     public String user = "sa";
-    public String pass = "holajuan1";
+    public String pass = "123";
     public java.sql.Statement s;
     public ResultSet resultado;
     public Connection conexion = null;
@@ -88,6 +88,10 @@ public class Conexion {
             System.out.println("Se produjo un error inesperado:    " + e.getMessage());
         }
         return respuesta;
+    }
+
+    int EjecutarOperacion(String sql) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
