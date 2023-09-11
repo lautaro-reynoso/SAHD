@@ -29,17 +29,16 @@ public class Peticiones {
         
     }
     
+    public void modificaInventario(String cantidad,String descripcion){
+         Main.conexion.EjecutarOperacionSQL("UPDATE productos SET cantidad = cantidad - " +cantidad +" WHERE descripcion = '"+ descripcion +"'");
+        }
+    
     public ResultSet buscainventario (String str){
         
         String sql = "SELECT * FROM productos WHERE descripcion LIKE '" +str+"%'";
 
        return Main.conexion.EjecutarConsultaSQL(sql);
         
-    }
-    
-    public void modificainventario(String cantidad,String descripcion){
-        Main.conexion.EjecutarOperacionSQL("UPDATE productos SET cantidad = cantidad - " +cantidad +" WHERE descripcion = '"+ descripcion +"'");
-
     }
     
     
