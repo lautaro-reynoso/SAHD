@@ -50,8 +50,10 @@ public class Venta extends javax.swing.JPanel {
     
     public void initbolsa () {
         try {
+            
             tablaventa("");
-            leetable_bolsa();
+            //leetable_bolsa();
+            leebolsa();
             tf_total.setEditable(false);
             jLayeredPane3.add(jPanel1,JLayeredPane.POPUP_LAYER);
             
@@ -83,6 +85,9 @@ public class Venta extends javax.swing.JPanel {
         model.setRowCount(0);
     }
     
+    
+   
+    /*PUDE HACERLA COMO QUIERO
     public void leetable_bolsa() {
     table_bolsa.addKeyListener(new KeyAdapter() {
         @Override
@@ -116,8 +121,42 @@ public class Venta extends javax.swing.JPanel {
             }
         }
     });
-}
+}*/
+    
+    public void leebolsa(){
+        DefaultTableModel model = (DefaultTableModel) table_bolsa.getModel();
+        model.addTableModelListener(new TableModelListener() {
+        @Override
+        
+        public void tableChanged(TableModelEvent e) {
+            int row = e.getFirstRow();
+            int col = e.getColumn();
+            if (col == 2) { // Columna "cantidad"
+                try {
+                String cantidadStr = model.getValueAt(row, col).toString();
+                String preciostr = model.getValueAt(row, 4).toString();
+                String stockstr = model.getValueAt(row, 3).toString();
+                String descripcion = model.getValueAt(row, 1).toString();
+                int cant = Integer.parseInt(cantidadStr);
+                float precio = Float.parseFloat(preciostr);
+                int stock = Integer.parseInt(stockstr);
 
+                if (cant > stock) {
+                    JOptionPane.showMessageDialog(null, "No tiene esa cantidad de " + descripcion + " revisar stock!.");
+                    model.setValueAt("1", row, 2);
+                } else {
+                    model.setValueAt(cant * precio, row, 5);
+                    tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
+                }
+            } catch (NumberFormatException ex) {
+                // Maneja la excepción si la cadena no es un número válido
+                System.err.println("Error: conflicto de tipos.");
+            }
+        }
+    }
+});
+    }
+    
     public class SumaColumnaTabla {
     public static double sumarColumna4(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -205,6 +244,7 @@ public class Venta extends javax.swing.JPanel {
         j_desc = new javax.swing.JLabel();
         j_select = new javax.swing.JLabel();
         j_close = new javax.swing.JLabel();
+        panel_productos = new javax.swing.JPanel();
         buscar_p = new javax.swing.JLabel();
         J_CUIT = new javax.swing.JLabel();
         TF_cuit = new javax.swing.JTextField();
@@ -252,14 +292,16 @@ public class Venta extends javax.swing.JPanel {
             new String [] {
                 "Codigo", "Descripcion", "Cantidad", "Precio"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabla_venta);
-        if (tabla_venta.getColumnModel().getColumnCount() > 0) {
-            tabla_venta.getColumnModel().getColumn(0).setHeaderValue("Codigo");
-            tabla_venta.getColumnModel().getColumn(1).setHeaderValue("Descripcion");
-            tabla_venta.getColumnModel().getColumn(2).setHeaderValue("Cantidad");
-            tabla_venta.getColumnModel().getColumn(3).setHeaderValue("Precio");
-        }
 
         j_buscar.setText("Buscar");
         j_buscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -320,30 +362,28 @@ public class Venta extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(j_select)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(j_close)
+                        .addGap(17, 17, 17)))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(63, Short.MAX_VALUE)
                         .addComponent(j_desc)
                         .addGap(43, 43, 43)
                         .addComponent(descipcion_p, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(259, 259, 259)
-                                .addComponent(cerrar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(j_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(j_select)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(j_close)
-                                .addGap(17, 17, 17)))
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(j_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(188, 188, 188))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(132, 132, 132))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,14 +396,14 @@ public class Venta extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cerrar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(descipcion_p, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(j_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(j_desc))))
+                            .addComponent(j_desc)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cerrar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72))
@@ -373,13 +413,15 @@ public class Venta extends javax.swing.JPanel {
         jframe_fact.getContentPane().setLayout(jframe_factLayout);
         jframe_factLayout.setHorizontalGroup(
             jframe_factLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jframe_factLayout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jframe_factLayout.setVerticalGroup(
             jframe_factLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jframe_factLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 131, Short.MAX_VALUE))
+                .addGap(0, 175, Short.MAX_VALUE))
         );
 
         jPanel2.add(jframe_fact, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -396,27 +438,22 @@ public class Venta extends javax.swing.JPanel {
                 buscar_pMousePressed(evt);
             }
         });
-        jPanel2.add(buscar_p, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 109, 215, 36));
 
         J_CUIT.setText("CUIT/CUIL/DNI:");
-        jPanel2.add(J_CUIT, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 6, 93, 26));
 
         TF_cuit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_cuitActionPerformed(evt);
             }
         });
-        jPanel2.add(TF_cuit, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 8, 138, -1));
 
         J_CUIT1.setText("Razon Social:");
-        jPanel2.add(J_CUIT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(391, 6, 93, 26));
 
         TF_cuit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_cuit1ActionPerformed(evt);
             }
         });
-        jPanel2.add(TF_cuit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 8, 138, -1));
 
         table_bolsa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -425,13 +462,18 @@ public class Venta extends javax.swing.JPanel {
             new String [] {
                 "Codigo", "Descripcion", "Cantidad", "Stock", "Precio", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(table_bolsa);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 64, 389, 226));
-
         j_t.setText("Total:");
-        jPanel2.add(j_t, new org.netbeans.lib.awtextra.AbsoluteConstraints(303, 308, 56, 37));
 
         tf_total.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -443,7 +485,6 @@ public class Venta extends javax.swing.JPanel {
                 tf_totalActionPerformed(evt);
             }
         });
-        jPanel2.add(tf_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 315, -1, -1));
 
         j_vender.setText("Vender");
         j_vender.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -457,7 +498,68 @@ public class Venta extends javax.swing.JPanel {
                 j_venderMousePressed(evt);
             }
         });
-        jPanel2.add(j_vender, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 308, 48, 37));
+
+        javax.swing.GroupLayout panel_productosLayout = new javax.swing.GroupLayout(panel_productos);
+        panel_productos.setLayout(panel_productosLayout);
+        panel_productosLayout.setHorizontalGroup(
+            panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_productosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_productosLayout.createSequentialGroup()
+                        .addComponent(J_CUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(TF_cuit, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(J_CUIT1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(TF_cuit1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panel_productosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(buscar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_productosLayout.createSequentialGroup()
+                    .addGap(297, 311, Short.MAX_VALUE)
+                    .addComponent(j_t, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(6, 6, 6)
+                    .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(39, 39, 39)
+                    .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 127, Short.MAX_VALUE)))
+        );
+        panel_productosLayout.setVerticalGroup(
+            panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_productosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_productosLayout.createSequentialGroup()
+                        .addComponent(TF_cuit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99)
+                        .addComponent(buscar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_productosLayout.createSequentialGroup()
+                        .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(J_CUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_cuit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(J_CUIT1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(79, Short.MAX_VALUE))
+            .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_productosLayout.createSequentialGroup()
+                    .addContainerGap(306, Short.MAX_VALUE)
+                    .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(j_t, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panel_productosLayout.createSequentialGroup()
+                            .addGap(7, 7, 7)
+                            .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPanel2.add(panel_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLayeredPane3.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -581,11 +683,19 @@ public class Venta extends javax.swing.JPanel {
     }//GEN-LAST:event_j_venderMouseExited
 
     private void buscar_pMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_pMousePressed
+        try {
+            tablaventa("");
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         jframe_fact.setVisible(true);
+        panel_productos.setVisible(false);
+        
     }//GEN-LAST:event_buscar_pMousePressed
 
     private void cerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMousePressed
         jframe_fact.setVisible(false);
+        panel_productos.setVisible(true);
         
     }//GEN-LAST:event_cerrarMousePressed
 
@@ -625,7 +735,7 @@ public class Venta extends javax.swing.JPanel {
     }//GEN-LAST:event_TF_cuit1ActionPerformed
 
     private void j_selectMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_selectMousePressed
-    
+        
         int filaSeleccionada = tabla_venta.getSelectedRow();
             
         if (filaSeleccionada != -1) { try {
@@ -642,6 +752,7 @@ public class Venta extends javax.swing.JPanel {
             
             cargatablabolsa(tab);
             jframe_fact.setVisible(false);
+            panel_productos.setVisible(true);
             
             tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
             
@@ -673,7 +784,7 @@ public class Venta extends javax.swing.JPanel {
 
     private void j_closeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_closeMousePressed
        jframe_fact.setVisible(false);
-        
+       panel_productos.setVisible(true);
     }//GEN-LAST:event_j_closeMousePressed
 
         
@@ -697,6 +808,7 @@ public class Venta extends javax.swing.JPanel {
     private javax.swing.JLabel j_t;
     private javax.swing.JLabel j_vender;
     private javax.swing.JInternalFrame jframe_fact;
+    private javax.swing.JPanel panel_productos;
     private javax.swing.JTable tabla_venta;
     private javax.swing.JTable table_bolsa;
     private javax.swing.JTextField tf_total;
