@@ -48,4 +48,11 @@ public class Peticiones {
         return Main.conexion.EjecutarOperacionSQL(sql);
     }
     
+    public ResultSet login (String user, String pass){
+        
+        String sql = "SELECT * FROM Usuarios WHERE usuario = '" + user + "' AND contraseña = '" + pass + "'";
+
+        return Main.conexion.EjecutarConsultaSQL(sql);
+    }
+           
 }

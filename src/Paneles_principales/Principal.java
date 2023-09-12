@@ -33,6 +33,8 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        
+        
         MostrarPanel(inventario);
         boton_inventario.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
     }

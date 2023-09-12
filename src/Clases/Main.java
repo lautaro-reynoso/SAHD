@@ -4,6 +4,7 @@
  */
 package Clases;
 
+import Paneles_principales.Login;
 import Paneles_principales.Principal;
 import java.net.UnknownHostException;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -31,7 +32,7 @@ public class Main {
         
                 java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Login().setVisible(true);
             }
         });
         
