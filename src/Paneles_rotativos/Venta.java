@@ -245,7 +245,6 @@ public class Venta extends javax.swing.JPanel {
         j_select = new javax.swing.JLabel();
         j_close = new javax.swing.JLabel();
         panel_productos = new javax.swing.JPanel();
-        buscar_p = new javax.swing.JLabel();
         J_CUIT = new javax.swing.JLabel();
         TF_cuit = new javax.swing.JTextField();
         J_CUIT1 = new javax.swing.JLabel();
@@ -255,6 +254,9 @@ public class Venta extends javax.swing.JPanel {
         j_t = new javax.swing.JLabel();
         tf_total = new javax.swing.JTextField();
         j_vender = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        buscar_p = new javax.swing.JLabel();
+        descartar_p = new javax.swing.JLabel();
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -426,19 +428,6 @@ public class Venta extends javax.swing.JPanel {
 
         jPanel2.add(jframe_fact, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        buscar_p.setText("Buscar Producto");
-        buscar_p.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buscar_pMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                buscar_pMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                buscar_pMousePressed(evt);
-            }
-        });
-
         J_CUIT.setText("CUIT/CUIL/DNI:");
 
         TF_cuit.addActionListener(new java.awt.event.ActionListener() {
@@ -486,7 +475,9 @@ public class Venta extends javax.swing.JPanel {
             }
         });
 
+        j_vender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         j_vender.setText("Vender");
+        j_vender.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         j_vender.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 j_venderMouseEntered(evt);
@@ -496,6 +487,49 @@ public class Venta extends javax.swing.JPanel {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 j_venderMousePressed(evt);
+            }
+        });
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscador"));
+
+        buscar_p.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        buscar_p.setText("Buscar Producto");
+        buscar_p.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        buscar_p.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buscar_p.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buscar_pMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buscar_pMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                buscar_pMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buscar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buscar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        descartar_p.setText("Descartar Producto");
+        descartar_p.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        descartar_p.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                descartar_pMousePressed(evt);
             }
         });
 
@@ -513,22 +547,26 @@ public class Venta extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(J_CUIT1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(TF_cuit1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(TF_cuit1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_productosLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                        .addComponent(buscar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panel_productosLayout.createSequentialGroup()
-                    .addGap(297, 311, Short.MAX_VALUE)
-                    .addComponent(j_t, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(6, 6, 6)
-                    .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(39, 39, 39)
-                    .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 127, Short.MAX_VALUE)))
+                        .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_productosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel_productosLayout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(descartar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(236, 236, 236))
+            .addGroup(panel_productosLayout.createSequentialGroup()
+                .addGap(256, 256, 256)
+                .addComponent(j_t, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_productosLayout.setVerticalGroup(
             panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -537,8 +575,10 @@ public class Venta extends javax.swing.JPanel {
                 .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_productosLayout.createSequentialGroup()
                         .addComponent(TF_cuit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(99, 99, 99)
-                        .addComponent(buscar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(51, 51, 51)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(descartar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_productosLayout.createSequentialGroup()
                         .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(J_CUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -546,17 +586,12 @@ public class Venta extends javax.swing.JPanel {
                             .addComponent(J_CUIT1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
-            .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panel_productosLayout.createSequentialGroup()
-                    .addContainerGap(306, Short.MAX_VALUE)
-                    .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(j_t, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panel_productosLayout.createSequentialGroup()
-                            .addGap(7, 7, 7)
-                            .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(j_t, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         jPanel2.add(panel_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -787,6 +822,18 @@ public class Venta extends javax.swing.JPanel {
        panel_productos.setVisible(true);
     }//GEN-LAST:event_j_closeMousePressed
 
+    private void descartar_pMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descartar_pMousePressed
+        int selectedRow = table_bolsa.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_bolsa.getModel();
+                    model.removeRow(selectedRow);
+                    model.fireTableDataChanged(); // Notificar que los datos han cambiado
+                    tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
+                }else{
+                    JOptionPane.showMessageDialog(null, "Seleccione un producto de la tabla");
+                }
+    }//GEN-LAST:event_descartar_pMousePressed
+
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_CUIT;
@@ -795,10 +842,12 @@ public class Venta extends javax.swing.JPanel {
     private javax.swing.JTextField TF_cuit1;
     private javax.swing.JLabel buscar_p;
     private javax.swing.JLabel cerrar;
+    private javax.swing.JLabel descartar_p;
     private javax.swing.JTextField descipcion_p;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel j_buscar;
