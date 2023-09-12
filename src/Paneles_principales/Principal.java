@@ -156,6 +156,11 @@ public class Principal extends javax.swing.JFrame {
 
     private void boton_inventarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_inventarioMousePressed
         MostrarPanel(inventario);
+        try {
+            inventario.tablaproductos ();
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         boton_inventario.setBackground(new java.awt.Color(0, 204, 145));
         boton_inventario.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
         boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
