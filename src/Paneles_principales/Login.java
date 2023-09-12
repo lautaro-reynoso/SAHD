@@ -283,22 +283,19 @@ public class Login extends javax.swing.JFrame {
     public void login() throws SQLException {
         String usuario = userTxt.getText();
         String pass = String.valueOf(passTxt.getPassword());
-        
+
         Peticiones peticion = new Peticiones();
-       // try {
-            ResultSet res = peticion.login(usuario, pass);
-            
-           // if (res.next()) {
-                Principal principal = new Principal();
-                principal.setVisible(true); //Show other frame
-                super.dispose();
-          //  } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta\nIntente nuevamente.", "ERROR", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("contrasenia inc");
-         //   }
-       // } catch (SQLException ex) {
-         //   Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-      //  }
+
+        ResultSet res = peticion.login(usuario, pass);
+
+        if (res.next()) {
+            Principal principal = new Principal();
+            principal.setVisible(true); //Show other frame
+            super.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta\nIntente nuevamente.", "ERROR", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("contrasenia inc");
+        }
 
     }
     private void loginBtnTxtComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_loginBtnTxtComponentAdded
@@ -310,7 +307,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnTxtKeyPressed
 
     private void passTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passTxtKeyPressed
-
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            try {
+                login();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }//GEN-LAST:event_passTxtKeyPressed
 

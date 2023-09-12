@@ -50,7 +50,7 @@ public class Peticiones {
     
     public ResultSet login (String user, String pass){
         
-        String sql = "SELECT * FROM Usuarios WHERE usuario = '" + user + "' AND contraseña = '" + pass + "'";
+        String sql = "SELECT * FROM Usuarios WHERE usuario = '" + user + "' AND contrasenia = '" + pass + "'";
 
         return Main.conexion.EjecutarConsultaSQL(sql);
     }
