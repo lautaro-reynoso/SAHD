@@ -46,8 +46,14 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import javax.swing.DefaultCellEditor;
+import javax.swing.text.DocumentFilter;
 
 /**
  *
@@ -135,8 +141,7 @@ public class Venta extends javax.swing.JPanel {
       //Add the PDF table to the document
       presupuesto.add(tabla);
       presupuesto.add(Chunk.NEWLINE);
-      //Add some information to the document
-      
+      //Add some information to the document 
       Paragraph info2 = new Paragraph();
       presupuesto.add(Chunk.NEWLINE);
       info2.add(new Phrase("Valor total: " + tf_total.getText()));
@@ -151,10 +156,21 @@ public class Venta extends javax.swing.JPanel {
       
       //Close the document
       presupuesto.close();
-      
-    }catch(Exception e){
-        e.printStackTrace();
+      JOptionPane.showMessageDialog(null, "Presupuesto generado correctamente.");
+      try {
+    File file = new File(ruta + "/Desktop/Presupuesto.pdf");
+    if (Desktop.isDesktopSupported()) {
+        Desktop.getDesktop().open(file);
+    } else {
+        // La apertura automática no es compatible en este sistema
+        System.out.println("No se puede abrir automáticamente el PDF en este sistema.");
+        }
+    } catch (IOException e) {
     }
+    }catch(DocumentException | FileNotFoundException e){
+    }
+        
+        
         }
         
    
@@ -195,39 +211,49 @@ public class Venta extends javax.swing.JPanel {
 }*/
     
     public void leebolsa(){
-        DefaultTableModel model = (DefaultTableModel) table_bolsa.getModel();
-        model.addTableModelListener(new TableModelListener() {
+    DefaultTableModel model = (DefaultTableModel) table_bolsa.getModel();
+    model.addTableModelListener(new TableModelListener() {
         @Override
-        
         public void tableChanged(TableModelEvent e) {
             int row = e.getFirstRow();
             int col = e.getColumn();
             if (col == 2) { // Columna "cantidad"
                 try {
-                String cantidadStr = model.getValueAt(row, col).toString();
-                String preciostr = model.getValueAt(row, 4).toString();
-                String stockstr = model.getValueAt(row, 3).toString();
-                String descripcion = model.getValueAt(row, 1).toString();
-                int cant = Integer.parseInt(cantidadStr);
-                float precio = Float.parseFloat(preciostr);
-                int stock = Integer.parseInt(stockstr);
+                    String cantidadStr = model.getValueAt(row, col).toString();
+                    String preciostr = model.getValueAt(row, 4).toString();
+                    String stockstr = model.getValueAt(row, 3).toString();
+                    String descripcion = model.getValueAt(row, 1).toString();
+                    int cant = Integer.parseInt(cantidadStr);
+                    float precio = Float.parseFloat(preciostr);
+                    int stock = Integer.parseInt(stockstr);
 
-                if (cant > stock) {
-                    JOptionPane.showMessageDialog(null, "No tiene esa cantidad de " + descripcion + " revisar stock!.");
-                    model.setValueAt("1", row, 2);
-                } else {
-                    model.setValueAt(cant * precio, row, 5);
-                    tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
+                    if (cant > stock) {
+                        JOptionPane.showMessageDialog(null, "No tiene esa cantidad de " + descripcion + " revisar stock!.");
+                        model.setValueAt("1", row, 2);
+                    } else {
+                        model.setValueAt(cant * precio, row, 5);
+                        tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
+                    }
+                } catch (NumberFormatException ex) {
+                    // Maneja la excepción si la cadena no es un número válido
+                    System.err.println("Error: conflicto de tipos.");
                 }
-            } catch (NumberFormatException ex) {
-                // Maneja la excepción si la cadena no es un número válido
-                System.err.println("Error: conflicto de tipos.");
             }
         }
-    }
-});
-    }
-    
+    });
+
+    // Add a KeyListener to the cell editor
+    DefaultCellEditor editor = (DefaultCellEditor) table_bolsa.getDefaultEditor(Object.class);
+    editor.getComponent().addKeyListener(new KeyAdapter() {
+        public void keyTyped(KeyEvent e) {
+            char c = e.getKeyChar();
+            if (!Character.isDigit(c)) {
+                e.consume();  // ignore event
+            }
+        }
+    });
+}
+
     public class SumaColumnaTabla {
     public static double sumarColumna4(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -247,6 +273,9 @@ public class Venta extends javax.swing.JPanel {
                 // Puedes mostrar un mensaje de error o realizar otra acción apropiada aquí
             }
         }
+
+        // Redondear la suma a dos decimales antes de devolverla
+        suma = Math.round(suma * 100.0) / 100.0;
 
         return suma;
     }
