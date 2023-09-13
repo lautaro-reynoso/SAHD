@@ -121,14 +121,19 @@ public class Venta extends javax.swing.JPanel {
         String ruta = System.getProperty("user.home");
         PdfWriter writer = PdfWriter.getInstance(presupuesto, new FileOutputStream(ruta + "/Desktop/Presupuesto.pdf"));
         presupuesto.open();
-
+        
+        
+        
         // Add image and text at the top
         Image img = Image.getInstance("src/img/logo_corralon.png");
         img.setAlignment(Image.ALIGN_LEFT);
         img.scaleToFit(45,45);
+        
+        Paragraph line = new Paragraph("-------------------------------------------------------------------", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD));
 
-        Paragraph title = new Paragraph("CORRALON HD DE LA FAMILIA", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLD));
 
+        Paragraph title = new Paragraph("CORRALON HD DE LA FAMILIA", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD));
+  
         // Create a table with two columns
         PdfPTable headerTable = new PdfPTable(2);
         
@@ -139,6 +144,7 @@ public class Venta extends javax.swing.JPanel {
         headerTable.addCell(cell);
 
         cell = new PdfPCell();
+        cell.addElement(line);
         cell.addElement(title);
         cell.setBorder(Rectangle.NO_BORDER);
         headerTable.addCell(cell);
@@ -147,13 +153,7 @@ public class Venta extends javax.swing.JPanel {
         presupuesto.add(headerTable);
 
         // Draw a line above the title
-        PdfContentByte cb = writer.getDirectContent();
-        cb.saveState();
-        cb.setLineWidth(1f); // set line width
-        cb.moveTo(50, 500); // start point (x1, y1)
-        cb.lineTo(450, 500); // end point (x2, y2)
-        cb.stroke();
-        cb.restoreState();
+        
 
         PdfPTable tabla = new PdfPTable(4);
         tabla.addCell("Descripcion");
@@ -169,7 +169,6 @@ public class Venta extends javax.swing.JPanel {
                 }
             }
         }
-
         // Add the PDF table to the document
         presupuesto.add(tabla);
 
@@ -327,7 +326,7 @@ public class Venta extends javax.swing.JPanel {
         ArrayList<Object> nombrecolumna = new ArrayList<Object>();
         nombrecolumna.add("Codigo");
         nombrecolumna.add("Descripcion");
-        nombrecolumna.add("Cantidad");
+        nombrecolumna.add("Stock");
         nombrecolumna.add("Precio");
 
         for (Object columna : nombrecolumna) {
@@ -428,7 +427,7 @@ public class Venta extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Codigo", "Descripcion", "Cantidad", "Precio"
+                "Codigo", "Descripcion", "Stock", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
