@@ -42,11 +42,17 @@ import javax.swing.text.Segment;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
+import java.awt.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -108,70 +114,96 @@ public class Venta extends javax.swing.JPanel {
         model.setRowCount(0);
     }
     
-    public void imprimir_presupuesto (){
-        Document presupuesto = new Document();
+    public void imprimir_presupuesto() throws IOException {
+    Document presupuesto = new Document();
+
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter writer = PdfWriter.getInstance(presupuesto, new FileOutputStream(ruta + "/Desktop/Presupuesto.pdf"));
+        presupuesto.open();
+
+        // Add image and text at the top
+        Image img = Image.getInstance("src/img/logo_corralon.png");
+        img.setAlignment(Image.ALIGN_LEFT);
+        img.scaleToFit(45,45);
+
+        Paragraph title = new Paragraph("CORRALON HD DE LA FAMILIA", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLD));
+
+        // Create a table with two columns
+        PdfPTable headerTable = new PdfPTable(2);
         
-        try{
-      String ruta = System.getProperty("user.home");
-      PdfWriter.getInstance(presupuesto, new FileOutputStream(ruta + "/Desktop/Presupuesto.pdf"));
-      presupuesto.open();
-      
-      PdfPTable tabla = new PdfPTable(4);
-      tabla.addCell("Descripcion");
-      tabla.addCell("Cantidad");
-      tabla.addCell("Precio");
-      tabla.addCell("Total");
-      
-      Paragraph info1 = new Paragraph();
-      info1.add(new Phrase("Presupuesto generado por: Corralon HD.")); //Add your name or company name here
-      presupuesto.add(info1);
-      
-      
-      for(int i = 0; i < table_bolsa.getRowCount(); i++){
-        for(int j = 1; j < table_bolsa.getColumnCount(); j++){
-          if(j!=3 ){
-              String valor = table_bolsa.getValueAt(i, j).toString();
-              tabla.addCell(valor);
-          }
-          
+        // Add the image and title to the table
+        PdfPCell cell = new PdfPCell();
+        cell.addElement(img);
+        cell.setBorder(Rectangle.NO_BORDER);
+        headerTable.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(title);
+        cell.setBorder(Rectangle.NO_BORDER);
+        headerTable.addCell(cell);
+
+        // Add the table to the document
+        presupuesto.add(headerTable);
+
+        // Draw a line above the title
+        PdfContentByte cb = writer.getDirectContent();
+        cb.saveState();
+        cb.setLineWidth(1f); // set line width
+        cb.moveTo(50, 500); // start point (x1, y1)
+        cb.lineTo(450, 500); // end point (x2, y2)
+        cb.stroke();
+        cb.restoreState();
+
+        PdfPTable tabla = new PdfPTable(4);
+        tabla.addCell("Descripcion");
+        tabla.addCell("Cantidad");
+        tabla.addCell("Precio");
+        tabla.addCell("Total");
+
+        for (int i = 0; i < table_bolsa.getRowCount(); i++) {
+            for (int j = 1; j < table_bolsa.getColumnCount(); j++) {
+                if (j != 3) {
+                    String valor = table_bolsa.getValueAt(i, j).toString();
+                    tabla.addCell(valor);
+                }
+            }
         }
-      }
-      
-      
-      //Add the PDF table to the document
-      presupuesto.add(tabla);
-      presupuesto.add(Chunk.NEWLINE);
-      //Add some information to the document 
-      Paragraph info2 = new Paragraph();
-      presupuesto.add(Chunk.NEWLINE);
-      info2.add(new Phrase("Valor total: " + tf_total.getText()));
-      presupuesto.add(Chunk.NEWLINE);
-      info2.add(new Phrase("\nFecha: " + new Date())); //Add the current date
-      presupuesto.add(Chunk.NEWLINE);
-      info2.add(new Phrase("\nGracias por su preferencia.")); //Add any other message you want
-      presupuesto.add(Chunk.NEWLINE);
-      
-      //Add the information paragraph to the document
-      presupuesto.add(info2);
-      
-      //Close the document
-      presupuesto.close();
-      JOptionPane.showMessageDialog(null, "Presupuesto generado correctamente.");
-      try {
-    File file = new File(ruta + "/Desktop/Presupuesto.pdf");
-    if (Desktop.isDesktopSupported()) {
-        Desktop.getDesktop().open(file);
-    } else {
-        // La apertura automática no es compatible en este sistema
-        System.out.println("No se puede abrir automáticamente el PDF en este sistema.");
+
+        // Add the PDF table to the document
+        presupuesto.add(tabla);
+
+        // Add total value and date
+        presupuesto.add(new Phrase("Valor total: " + tf_total.getText()));
+        presupuesto.add(new Phrase("\nFecha: " + new Date())); // Add the current date
+
+        // Add closing message
+        presupuesto.add(new Phrase("\nGracias por su preferencia.")); // Add any other message you want
+
+        // Close the document
+        presupuesto.close();
+
+        JOptionPane.showMessageDialog(null, "Presupuesto generado correctamente.");
+
+        try {
+            File file = new File(ruta + "/Desktop/Presupuesto.pdf");
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                System.out.println("No se puede abrir automáticamente el PDF en este sistema.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
+    } catch (DocumentException | FileNotFoundException e) {
     }
-    }catch(DocumentException | FileNotFoundException e){
-    }
-        
-        
-        }
+}
+
+
+
+
+
+
         
    
     /*PUDE HACERLA COMO QUIERO
@@ -921,10 +953,12 @@ public class Venta extends javax.swing.JPanel {
     }//GEN-LAST:event_descartar_pMousePressed
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-    imprimir_presupuesto ();        
-    
-        
-        
+        try {        
+            imprimir_presupuesto();
+        } catch (IOException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
     }//GEN-LAST:event_jLabel1MousePressed
 
         
