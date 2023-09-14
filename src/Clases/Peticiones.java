@@ -40,7 +40,20 @@ public class Peticiones {
        return Main.conexion.EjecutarConsultaSQL(sql);
         
     }
-    
+    public ResultSet buscarcodigo (String codigo){
+        
+        String sql = "SELECT * FROM productos WHERE codigo = '" + codigo + "'";
+                
+        return Main.conexion.EjecutarConsultaSQL(sql);
+    }
+            
+    public int modificarproducto (String codigoantiguo, String codigo, String descripcion, int cantidad, float precio){
+        
+        String sql = "UPDATE productos SET codigo = ' " + codigo + " ', descripcion = ' " + descripcion + " ', cantidad = ' " + cantidad + " ', precio = ' " + precio + " ' WHERE codigo = '" + codigoantiguo + "'"; 
+        System.out.println(sql);
+        
+        return Main.conexion.EjecutarOperacionSQL(sql);
+    }
     public int cargarproducto (String codigo, String descripcion, int cantidad, float precio){
         
         String sql = "INSERT INTO productos (descripcion, cantidad, precio, codigo)" + "VALUES('" + descripcion + "','" + cantidad + "','" + precio + "','" + codigo + "')";
