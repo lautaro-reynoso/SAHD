@@ -127,15 +127,25 @@ public class Venta extends javax.swing.JPanel {
         // Add image and text at the top
         Image img = Image.getInstance("src/img/logo_corralon.png");
         img.setAlignment(Image.ALIGN_LEFT);
-        img.scaleToFit(45,45);
+        img.scaleToFit(50,50);
         
-        Paragraph line = new Paragraph("-------------------------------------------------------------------", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD));
+        Paragraph line = new Paragraph("---------------------------------------------------------------------------------------------------", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
 
 
-        Paragraph title = new Paragraph("CORRALON HD DE LA FAMILIA", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD));
-  
+        Paragraph title = new Paragraph("CORRALON H.D. DE  JJYB S.R.L.", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
+        
+        Paragraph title1 = new Paragraph("Nº:   00001-000011978", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
+        
+        Paragraph title2 = new Paragraph("RAZON SOCIAL: CONSUMIDOR FINAL", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
+        
+        Paragraph title3 = new Paragraph("DOMICILIO: CONSUMIDOR FINAL", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
+
         // Create a table with two columns
         PdfPTable headerTable = new PdfPTable(2);
+        float[] columnWidths;
+        columnWidths = new float[] {2f, 8f};
+        headerTable.setWidths(columnWidths);
+        
         
         // Add the image and title to the table
         PdfPCell cell = new PdfPCell();
@@ -146,9 +156,13 @@ public class Venta extends javax.swing.JPanel {
         cell = new PdfPCell();
         cell.addElement(line);
         cell.addElement(title);
+        cell.addElement(line);
+        cell.addElement(title1);
+        cell.addElement(title2);
+        cell.addElement(title3);
         cell.setBorder(Rectangle.NO_BORDER);
         headerTable.addCell(cell);
-
+        
         // Add the table to the document
         presupuesto.add(headerTable);
 
@@ -173,7 +187,7 @@ public class Venta extends javax.swing.JPanel {
         presupuesto.add(tabla);
 
         // Add total value and date
-        presupuesto.add(new Phrase("Valor total: " + tf_total.getText()));
+        presupuesto.add(new Phrase("                                                                                                                Valor total: " + tf_total.getText()));
         presupuesto.add(new Phrase("\nFecha: " + new Date())); // Add the current date
 
         // Add closing message
@@ -192,7 +206,6 @@ public class Venta extends javax.swing.JPanel {
                 System.out.println("No se puede abrir automáticamente el PDF en este sistema.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     } catch (DocumentException | FileNotFoundException e) {
     }
