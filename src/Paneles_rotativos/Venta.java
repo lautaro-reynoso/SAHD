@@ -57,6 +57,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.Date;
 import javax.swing.DefaultCellEditor;
@@ -87,7 +89,7 @@ public class Venta extends javax.swing.JPanel {
             tf_total.setEditable(false);
             jLayeredPane3.add(panel_busqueda,JLayeredPane.POPUP_LAYER);
             tf_descuento.setValue(0.0);
-            
+            tf_aumento.setValue(0.0);
         } catch (SQLException ex) {
             Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -255,6 +257,10 @@ public class Venta extends javax.swing.JPanel {
         }
     });
 }*/
+    public void actualizabolsa(){
+        DefaultTableModel model = (DefaultTableModel) table_bolsa.getModel();
+        
+    }
     
     public void leebolsa(){
     DefaultTableModel model = (DefaultTableModel) table_bolsa.getModel();
@@ -277,7 +283,9 @@ public class Venta extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "No tiene esa cantidad de " + descripcion + " revisar stock!.");
                         model.setValueAt("1", row, 2);
                     } else {
-                        model.setValueAt(cant * precio, row, 5);
+                        precio = (cant * precio);
+                        precio = (float) (Math.round(precio * 100.0) / 100.0);
+                        model.setValueAt(precio, row, 5);
                         tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
                     }
                 } catch (NumberFormatException ex) {
@@ -298,7 +306,10 @@ public class Venta extends javax.swing.JPanel {
             }
         }
     });
+    
 }
+    
+    
 
     public class SumaColumnaTabla {
     public static double sumarColumna4(JTable tabla) {
@@ -327,7 +338,9 @@ public class Venta extends javax.swing.JPanel {
     }
 }
     
-    public  void aplicaDescuento(JTable tabla, double des) {
+    
+    
+    public  void aplicaDescuento(JTable tabla, float des) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         int rowCount = modelo.getRowCount();
         
@@ -335,23 +348,55 @@ public class Venta extends javax.swing.JPanel {
         for (int fila = 0; fila < rowCount; fila++) {
             
             Object valor = tabla.getValueAt(fila, 4);
-            
+            Object cantidad = tabla.getValueAt(fila, 2);
             
             try {
-                double valorPrecio = Double.parseDouble(valor.toString());
+                float valorPrecio = Float.parseFloat(valor.toString());
+                float cant = Float.parseFloat(cantidad.toString());
                 valorPrecio = valorPrecio - (valorPrecio*des);
-                tabla.setValueAt(valorPrecio,fila,4);
+                valorPrecio = (float)(Math.round(valorPrecio * 100.0) / 100.0);
+                modelo.setValueAt(valorPrecio,fila,4);
+                
+                cant = cant * valorPrecio;
+                cant = (float)(Math.round(cant * 100.0) / 100.0);
+                modelo.setValueAt(cant,fila,5);
+                
             } catch (NumberFormatException e) {
-                // Manejar el caso en el que el valor no sea un número válido
-                // Puedes mostrar un mensaje de error o realizar otra acción apropiada aquí
+                
             }
         }
-
-        
-
         
     }
+    
+    public  void aplicaAumento(JTable tabla, float des) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        int rowCount = modelo.getRowCount();
+        
 
+        for (int fila = 0; fila < rowCount; fila++) {
+            
+            Object valor = tabla.getValueAt(fila, 4);
+            Object cantidad = tabla.getValueAt(fila, 2);
+            
+            try {
+                float valorPrecio = Float.parseFloat(valor.toString());
+                float cant = Float.parseFloat(cantidad.toString());
+                valorPrecio = valorPrecio + (valorPrecio*des);
+                valorPrecio = (float) (Math.round(valorPrecio * 100.0) / 100.0);
+                
+                modelo.setValueAt(valorPrecio,fila,4);
+                cant = cant * valorPrecio;
+                cant = (float) (Math.round(cant * 100.0) / 100.0);
+                
+                modelo.setValueAt(cant,fila,5);
+                
+                
+            } catch (NumberFormatException e) {
+                
+            }
+        }
+        
+    }
 
 
             
@@ -433,6 +478,9 @@ public class Venta extends javax.swing.JPanel {
         panel_descuento = new javax.swing.JPanel();
         tf_descuento = new javax.swing.JFormattedTextField();
         j_aplicard = new javax.swing.JLabel();
+        panel_aumento = new javax.swing.JPanel();
+        tf_aumento = new javax.swing.JFormattedTextField();
+        j_aplicarA = new javax.swing.JLabel();
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -714,6 +762,11 @@ public class Venta extends javax.swing.JPanel {
         panel_descuento.setBorder(javax.swing.BorderFactory.createTitledBorder("Aplicar Descuento"));
 
         tf_descuento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0%"))));
+        tf_descuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_descuentoKeyTyped(evt);
+            }
+        });
 
         j_aplicard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         j_aplicard.setText("Aplicar");
@@ -736,11 +789,11 @@ public class Venta extends javax.swing.JPanel {
         panel_descuentoLayout.setHorizontalGroup(
             panel_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_descuentoLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addComponent(tf_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(j_aplicard, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_descuentoLayout.setVerticalGroup(
             panel_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -749,6 +802,52 @@ public class Venta extends javax.swing.JPanel {
                 .addGroup(panel_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(j_aplicard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panel_aumento.setBorder(javax.swing.BorderFactory.createTitledBorder("Aplicar Aumento"));
+
+        tf_aumento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0%"))));
+        tf_aumento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_aumentoKeyTyped(evt);
+            }
+        });
+
+        j_aplicarA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        j_aplicarA.setText("Aplicar");
+        j_aplicarA.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        j_aplicarA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        j_aplicarA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                j_aplicarAMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                j_aplicarAMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                j_aplicarAMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_aumentoLayout = new javax.swing.GroupLayout(panel_aumento);
+        panel_aumento.setLayout(panel_aumentoLayout);
+        panel_aumentoLayout.setHorizontalGroup(
+            panel_aumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_aumentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tf_aumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(j_aplicarA, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_aumentoLayout.setVerticalGroup(
+            panel_aumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_aumentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_aumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_aumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(j_aplicarA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -785,11 +884,13 @@ public class Venta extends javax.swing.JPanel {
                                         .addComponent(descartar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panel_productosLayout.createSequentialGroup()
                                         .addGap(52, 52, 52)
-                                        .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(panel_buscador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(panel_descuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(30, 30, 30)))))
-                .addGap(65, 65, 65))
+                                        .addComponent(panel_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panel_productosLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(panel_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(panel_aumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(21, 21, 21))))))
             .addGroup(panel_productosLayout.createSequentialGroup()
                 .addGap(169, 169, 169)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -810,9 +911,11 @@ public class Venta extends javax.swing.JPanel {
                         .addComponent(panel_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(descartar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(panel_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
+                        .addGap(29, 29, 29)
+                        .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panel_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_aumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(panel_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -824,8 +927,6 @@ public class Venta extends javax.swing.JPanel {
                     .addComponent(j_vender, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(105, 105, 105))
         );
-
-        panel_descuento.getAccessibleContext().setAccessibleName("Aplicar Descuento");
 
         jPanel2.add(panel_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1069,12 +1170,55 @@ public class Venta extends javax.swing.JPanel {
             Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
         }
         Object value = tf_descuento.getValue();
-        double percentaje = ((Number) value).doubleValue();
-        System.out.println(percentaje);
-        aplicaDescuento(table_bolsa, percentaje);
-        tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
-        leebolsa();
+        float percentaje = (float)((Number) value).doubleValue();
+        if(percentaje > 1){
+            JOptionPane.showMessageDialog(null, "No se puede realizar un descuento de mas del 100%");
+            tf_descuento.setValue(0);
+        }else{
+            aplicaDescuento(table_bolsa, percentaje);       
+            tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
+        }
+        
+        
     }//GEN-LAST:event_j_aplicardMousePressed
+
+    private void tf_descuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_descuentoKeyTyped
+        
+            char c = evt.getKeyChar();
+            if (!Character.isDigit(c)) {
+                evt.consume();  // ignore event
+            }
+        
+    
+    }//GEN-LAST:event_tf_descuentoKeyTyped
+
+    private void tf_aumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_aumentoKeyTyped
+        char c = evt.getKeyChar();
+            if (!Character.isDigit(c)) {
+                evt.consume();  // ignore event
+            }
+    }//GEN-LAST:event_tf_aumentoKeyTyped
+
+    private void j_aplicarAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_aplicarAMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_j_aplicarAMouseEntered
+
+    private void j_aplicarAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_aplicarAMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_j_aplicarAMouseExited
+
+    private void j_aplicarAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_aplicarAMousePressed
+        try {
+            tf_aumento.commitEdit();
+        } catch (ParseException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object value = tf_aumento.getValue();
+        float percentaje = (float)((Number) value).doubleValue();
+        aplicaAumento(table_bolsa, percentaje);
+        
+        tf_total.setText(String.valueOf(sumarColumna4(table_bolsa)));
+    }//GEN-LAST:event_j_aplicarAMousePressed
 
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1091,6 +1235,7 @@ public class Venta extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel j_aplicarA;
     private javax.swing.JLabel j_aplicard;
     private javax.swing.JLabel j_close;
     private javax.swing.JLabel j_desc;
@@ -1098,12 +1243,14 @@ public class Venta extends javax.swing.JPanel {
     private javax.swing.JLabel j_t;
     private javax.swing.JLabel j_vender;
     private javax.swing.JInternalFrame jframe_fact;
+    private javax.swing.JPanel panel_aumento;
     private javax.swing.JPanel panel_buscador;
     private javax.swing.JPanel panel_busqueda;
     private javax.swing.JPanel panel_descuento;
     private javax.swing.JPanel panel_productos;
     private javax.swing.JTable tabla_venta;
     private javax.swing.JTable table_bolsa;
+    private javax.swing.JFormattedTextField tf_aumento;
     private javax.swing.JFormattedTextField tf_descuento;
     private javax.swing.JTextField tf_total;
     // End of variables declaration//GEN-END:variables
