@@ -177,7 +177,7 @@ public class Inventario extends javax.swing.JPanel {
             }
         });
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargar/Modificar producto"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargar producto"));
 
         stock.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -513,7 +513,7 @@ public class Inventario extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargar/Modificar producto"));
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Modificar producto"));
 
         stock1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

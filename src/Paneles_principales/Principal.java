@@ -5,6 +5,7 @@
 package Paneles_principales;
 
 import Paneles_rotativos.Inventario;
+import Paneles_rotativos.Usuario;
 import Paneles_rotativos.Venta;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ public class Principal extends javax.swing.JFrame {
     
     Inventario inventario;
     Venta venta;
+    Usuario usua;
             
     /**
      * Creates new form Principal
@@ -29,6 +31,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             this.inventario = new Inventario();
             this.venta = new Venta();
+            this.usua = new Usuario ();
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,10 +63,11 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         boton_inventario = new javax.swing.JLabel();
-        boton_presupuestos = new javax.swing.JLabel();
         boton_usuarios = new javax.swing.JLabel();
-        boton_caja = new javax.swing.JLabel();
+        salir = new javax.swing.JLabel();
         boton_venta = new javax.swing.JLabel();
+        boton_caja1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         contenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,6 +76,7 @@ public class Principal extends javax.swing.JFrame {
 
         boton_inventario.setForeground(new java.awt.Color(0, 46, 15));
         boton_inventario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        boton_inventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/baseline_assignment_black_24dp.png"))); // NOI18N
         boton_inventario.setText("INVENTARIO");
         boton_inventario.setToolTipText("");
         boton_inventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -81,20 +86,29 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        boton_presupuestos.setForeground(new java.awt.Color(0, 46, 15));
-        boton_presupuestos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        boton_presupuestos.setText("PRESUPUESTOS");
-
         boton_usuarios.setForeground(new java.awt.Color(0, 46, 15));
         boton_usuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        boton_usuarios.setText("USUARIOS");
+        boton_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/baseline_account_circle_black_24dp_1.png"))); // NOI18N
+        boton_usuarios.setText("USUARIO");
+        boton_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                boton_usuariosMousePressed(evt);
+            }
+        });
 
-        boton_caja.setForeground(new java.awt.Color(0, 46, 15));
-        boton_caja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        boton_caja.setText("CAJA");
+        salir.setForeground(new java.awt.Color(0, 46, 15));
+        salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salir.setText("SALIR");
+        salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                salirMousePressed(evt);
+            }
+        });
 
         boton_venta.setForeground(new java.awt.Color(0, 46, 15));
         boton_venta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        boton_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/baseline_attach_money_black_24dp.png"))); // NOI18N
         boton_venta.setText("VENTA");
         boton_venta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         boton_venta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,33 +117,43 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        boton_caja1.setForeground(new java.awt.Color(0, 46, 15));
+        boton_caja1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        boton_caja1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/kisspng-cash-register-computer-icons-money-payment-point-o-5af3897e79ef57.5804234915259098864995 (1).png"))); // NOI18N
+        boton_caja1.setText("CAJA");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(boton_inventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(boton_presupuestos, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-            .addComponent(boton_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(boton_caja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addComponent(boton_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+            .addComponent(salir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(boton_venta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(boton_caja1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(boton_venta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(boton_inventario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boton_presupuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boton_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boton_caja, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(boton_caja1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boton_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 331, Short.MAX_VALUE)
+                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         contenido.setMinimumSize(new java.awt.Dimension(900, 600));
@@ -165,8 +189,8 @@ public class Principal extends javax.swing.JFrame {
         }
         boton_inventario.setBackground(new java.awt.Color(0, 204, 145));
         boton_inventario.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
-        boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
-        boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        //boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_venta.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_inventarioMousePressed
@@ -175,22 +199,37 @@ public class Principal extends javax.swing.JFrame {
         MostrarPanel(venta);
         boton_venta.setBackground(new java.awt.Color(0, 204, 145));
         boton_venta.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
-        boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
-        boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+       // boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_inventario.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_ventaMousePressed
+
+    private void salirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMousePressed
+        System.exit(0);
+    }//GEN-LAST:event_salirMousePressed
+
+    private void boton_usuariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_usuariosMousePressed
+        MostrarPanel(usua);
+        boton_usuarios.setBackground(new java.awt.Color(0, 204, 145));
+        boton_usuarios.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
+       // boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_venta.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_inventario.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+    }//GEN-LAST:event_boton_usuariosMousePressed
     
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel boton_caja;
+    private javax.swing.JLabel boton_caja1;
     private javax.swing.JLabel boton_inventario;
-    private javax.swing.JLabel boton_presupuestos;
     private javax.swing.JLabel boton_usuarios;
     private javax.swing.JLabel boton_venta;
     private javax.swing.JPanel contenido;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel salir;
     // End of variables declaration//GEN-END:variables
 }
