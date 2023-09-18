@@ -29,6 +29,40 @@ public class Peticiones {
         
     }
     
+    public int NuevoUsuario(String nombre, String contrasenia, int privilegios) {
+
+        String sql;
+        sql = " INSERT INTO Usuarios (usuario,contrasenia, privilegio)"
+                + "VALUES ('" + nombre + "','" + contrasenia + "','" + privilegios + "')";
+        return Main.conexion.EjecutarOperacionSQL(sql);
+
+    }
+    public ResultSet consultausuarios (){
+        
+        String sql = "SELECT * FROM Usuarios ";
+
+       return Main.conexion.EjecutarConsultaSQL(sql);
+    }
+    public ResultSet seteariva (){
+        
+        String sql = "SELECT * FROM iva where id = 1 ";
+        
+        return Main.conexion.EjecutarConsultaSQL(sql);
+    }
+    
+    public int cargariva (float iva){
+        
+        String sql = "UPDATE iva SET iva = ' " + iva + " ' WHERE id = 1 ";
+        
+        return Main.conexion.EjecutarOperacionSQL(sql);
+    }
+    public int EliminarUsuario(String usuario) {
+        
+        String sql = "DELETE FROM Usuarios WHERE usuario = '" + usuario + "'";
+
+        return Main.conexion.EjecutarOperacionSQL(sql);
+    }
+    
     public void modificaInventario(String cantidad,String descripcion){
          Main.conexion.EjecutarOperacionSQL("UPDATE productos SET cantidad = cantidad - " +cantidad +" WHERE descripcion = '"+ descripcion +"'");
         }
@@ -49,8 +83,8 @@ public class Peticiones {
             
     public int modificarproducto (String codigoantiguo, String codigo, String descripcion, int cantidad, float precio){
         
-        String sql = "UPDATE productos SET codigo = ' " + codigo + " ', descripcion = ' " + descripcion + " ', cantidad = ' " + cantidad + " ', precio = ' " + precio + " ' WHERE codigo = '" + codigoantiguo + "'"; 
-        System.out.println(sql);
+        String sql = "UPDATE productos SET codigo ='"+ codigo + " ', descripcion ='"+ descripcion + "', cantidad = '"+ cantidad + " ', precio = ' " + precio + " ' WHERE codigo = '" + codigoantiguo + "'"; 
+        
         
         return Main.conexion.EjecutarOperacionSQL(sql);
     }

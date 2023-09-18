@@ -16,14 +16,21 @@ import java.sql.SQLException;
  */
 public class Main {
     public static Conexion conexion = new Conexion();
-    /**
-     * @param args the command line arguments
-     */
+    public static float iva;
+    public static int provilegio;
+    public static Controlador controlador = new Controlador();
+    
+    
+    
+    
     public static void main(String[] args) throws SQLException, ClassNotFoundException, UnknownHostException {
         FlatLightLaf.setup();
         try {
             
             conexion.Conectar();
+            controlador.seteariva();
+            
+            
 
         } catch (java.lang.NullPointerException e) {
             System.out.println("problemas");

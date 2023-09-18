@@ -86,6 +86,7 @@ public class Inventario extends javax.swing.JPanel {
 
         tabla_productos.setModel(modelo);
     }
+
     public void tablaproductos_modificar() throws SQLException {
 
         ResultSet res;
@@ -120,6 +121,7 @@ public class Inventario extends javax.swing.JPanel {
 
         tabla_productos1.setModel(modelo);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -642,40 +644,48 @@ public class Inventario extends javax.swing.JPanel {
         int fila = tabla_productos1.getSelectedRow();
         String valor = tabla_productos1.getValueAt(fila, 0).toString();
         res = peticiones.buscarcodigo(codigo1.getText());
-        
-        if (res.next() == true) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Ya existe un producto con ese codigo", "ERROR",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if (codigo1.getText().equals("") || descripcion1.getText().equals("") || stock1.getText().equals("") || precio1.getText().equals("")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Complete todos los campos", "ERROR",
+        int total = 0;
+        int pas = 0;
+
+        while (res.next()) {
+            total++;
+            if (res.getString("codigo") == codigo1.getText()) {
+                pas = 1;
+            }
+        }
+
+        if (total == 1 || pas == 1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ya existe un producto con ese codigo", "ERROR",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } else {
 
-            int respuesta2 = peticiones.modificarproducto(valor, codigo1.getText(), descripcion1.getText(), Integer.parseInt(stock1.getText()), Float.parseFloat(precio1.getText()));
+            if (codigo1.getText().equals("") || descripcion1.getText().equals("") || stock1.getText().equals("") || precio1.getText().equals("")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Complete todos los campos", "ERROR",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            } else {
 
-            if (respuesta2 == 1) {
-                codigo1.setText("");
-                descripcion1.setText("");
-                stock1.setText("");
-                precio1.setText("");
-                exito1.setText("Modificacion exitosa!");
+                int respuesta2 = peticiones.modificarproducto(valor, codigo1.getText(), descripcion1.getText(), Integer.parseInt(stock1.getText()), Float.parseFloat(precio1.getText()));
+
+                if (respuesta2 == 1) {
+                    codigo1.setText("");
+                    descripcion1.setText("");
+                    stock1.setText("");
+                    precio1.setText("");
+                    exito1.setText("Modificacion exitosa!");
+                }
             }
-        }
             tablaproductos_modificar();
         }
-
-        
     }
 
     public void cargar() throws SQLException {
         ResultSet res;
-        
+
         res = peticiones.buscarcodigo(codigo.getText());
 
         if (res.next() == true) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Ya existe un producto con ese codigo", "ERROR",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Ya existe un producto con ese codigo", "ERROR",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } else {
             if (codigo.getText().equals("") || descripcion.getText().equals("") || stock.getText().equals("") || precio.getText().equals("")) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Complete todos los campos", "ERROR",
@@ -835,7 +845,7 @@ public class Inventario extends javax.swing.JPanel {
     }//GEN-LAST:event_buscador_cod1KeyTyped
 
     private void stock1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stock1KeyPressed
-          char validador = evt.getKeyChar();
+        char validador = evt.getKeyChar();
 
         if (Character.isLetter(validador)) {
 
@@ -851,7 +861,7 @@ public class Inventario extends javax.swing.JPanel {
     }//GEN-LAST:event_stock1KeyPressed
 
     private void precio1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio1KeyPressed
-          char validador = evt.getKeyChar();
+        char validador = evt.getKeyChar();
 
         if (Character.isLetter(validador)) {
 

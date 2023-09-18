@@ -90,6 +90,7 @@ public class Principal extends javax.swing.JFrame {
         boton_usuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         boton_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/baseline_account_circle_black_24dp_1.png"))); // NOI18N
         boton_usuarios.setText("USUARIO");
+        boton_usuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         boton_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 boton_usuariosMousePressed(evt);
