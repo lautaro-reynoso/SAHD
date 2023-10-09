@@ -40,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
         
         MostrarPanel(inventario);
         boton_inventario.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
+        this.setLocationRelativeTo(null);
     }
     
     public void MostrarPanel(JPanel p) {
@@ -71,6 +72,7 @@ public class Principal extends javax.swing.JFrame {
         contenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel2.setBackground(new java.awt.Color(214, 226, 195));
 
