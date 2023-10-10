@@ -67,6 +67,13 @@ public class Peticiones {
          Main.conexion.EjecutarOperacionSQL("UPDATE productos SET cantidad = cantidad - " +cantidad +" WHERE descripcion = '"+ descripcion +"'");
         }
     
+    public int eliminarproducto (String codigo){
+        
+        String sql = "DELETE FROM productos WHERE codigo = '" + codigo + "'";
+        
+        return Main.conexion.EjecutarOperacionSQL(sql);
+        
+    }
     public ResultSet buscainventario (String str){
         
         String sql = "SELECT * FROM productos WHERE descripcion LIKE '" +str+"%'";
@@ -80,7 +87,13 @@ public class Peticiones {
                 
         return Main.conexion.EjecutarConsultaSQL(sql);
     }
-            
+    
+    public ResultSet inventario_stock(int stock){
+        
+        String sql = "SELECT * FROM productos WHERE cantidad <= '" + stock + "'";
+        
+        return Main.conexion.EjecutarConsultaSQL(sql);
+    }
     public int modificarproducto (String codigoantiguo, String codigo, String descripcion, int cantidad, float precio){
         
         String sql = "UPDATE productos SET codigo ='"+ codigo + " ', descripcion ='"+ descripcion + "', cantidad = '"+ cantidad + " ', precio = ' " + precio + " ' WHERE codigo = '" + codigoantiguo + "'"; 

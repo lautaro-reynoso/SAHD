@@ -27,7 +27,7 @@
           <Group type="102" alignment="1" attributes="0">
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="contenido" pref="1014" max="32767" attributes="0"/>
+              <Component id="contenido" pref="946" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -46,7 +46,7 @@
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="c3" green="e2" red="d6" type="rgb"/>
+          <Color blue="df" green="e2" red="c8" type="rgb"/>
         </Property>
       </Properties>
 
@@ -54,19 +54,16 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="boton_inventario" max="32767" attributes="0"/>
-              <Component id="boton_usuarios" alignment="0" pref="127" max="32767" attributes="0"/>
+              <Component id="boton_usuarios" alignment="0" max="32767" attributes="0"/>
               <Component id="salir" alignment="1" max="32767" attributes="0"/>
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="boton_caja1" max="32767" attributes="0"/>
                       <Component id="boton_venta" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel1" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
                   </Group>
               </Group>
+              <Component id="jLabel1" min="-2" pref="191" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -133,6 +130,9 @@
               <Color blue="f" green="2e" red="0" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/images/baseline_login_black_24dp.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SALIR"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
@@ -173,6 +173,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/images/Free_Sample_By_Wix.jpg"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
