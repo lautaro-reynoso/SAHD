@@ -4,6 +4,7 @@
  */
 package Paneles_principales;
 
+import Paneles_rotativos.Cajas;
 import Paneles_rotativos.Inventario;
 import Paneles_rotativos.Usuario;
 import Paneles_rotativos.Venta;
@@ -23,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
     Inventario inventario;
     Venta venta;
     Usuario usua;
+    Cajas cajas;
             
     /**
      * Creates new form Principal
@@ -32,6 +34,7 @@ public class Principal extends javax.swing.JFrame {
             this.inventario = new Inventario();
             this.venta = new Venta();
             this.usua = new Usuario ();
+            this.cajas = new Cajas();
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
         boton_usuarios = new javax.swing.JLabel();
         salir = new javax.swing.JLabel();
         boton_venta = new javax.swing.JLabel();
-        boton_caja1 = new javax.swing.JLabel();
+        boton_caja = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         contenido = new javax.swing.JPanel();
 
@@ -121,10 +124,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        boton_caja1.setForeground(new java.awt.Color(0, 46, 15));
-        boton_caja1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        boton_caja1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/kisspng-cash-register-computer-icons-money-payment-point-o-5af3897e79ef57.5804234915259098864995 (1).png"))); // NOI18N
-        boton_caja1.setText("CAJA");
+        boton_caja.setForeground(new java.awt.Color(0, 46, 15));
+        boton_caja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        boton_caja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/kisspng-cash-register-computer-icons-money-payment-point-o-5af3897e79ef57.5804234915259098864995 (1).png"))); // NOI18N
+        boton_caja.setText("CAJA");
+        boton_caja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        boton_caja.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                boton_cajaMousePressed(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/Free_Sample_By_Wix.jpg"))); // NOI18N
 
@@ -138,7 +147,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(boton_caja1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(boton_caja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(boton_venta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
@@ -152,7 +161,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boton_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boton_caja1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(boton_caja, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boton_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 331, Short.MAX_VALUE)
@@ -197,6 +206,7 @@ public class Principal extends javax.swing.JFrame {
         salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_venta.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_inventarioMousePressed
 
     private void boton_ventaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ventaMousePressed
@@ -207,6 +217,7 @@ public class Principal extends javax.swing.JFrame {
         salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_inventario.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_ventaMousePressed
 
     private void salirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMousePressed
@@ -221,13 +232,25 @@ public class Principal extends javax.swing.JFrame {
         salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_venta.setFont(new java.awt.Font("Segoe UI ", 0, 12));
         boton_inventario.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_caja.setFont(new java.awt.Font("Segoe UI ", 0, 12));
     }//GEN-LAST:event_boton_usuariosMousePressed
+
+    private void boton_cajaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cajaMousePressed
+        MostrarPanel(cajas);
+        boton_caja.setBackground(new java.awt.Color(0, 204, 145));
+        boton_caja.setFont(new java.awt.Font("Segoe UI Black", 0, 12));
+       // boton_presupuestos.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        salir.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_venta.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_usuarios.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+        boton_inventario.setFont(new java.awt.Font("Segoe UI ", 0, 12));
+    }//GEN-LAST:event_boton_cajaMousePressed
     
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel boton_caja1;
+    private javax.swing.JLabel boton_caja;
     private javax.swing.JLabel boton_inventario;
     private javax.swing.JLabel boton_usuarios;
     private javax.swing.JLabel boton_venta;

@@ -59,7 +59,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="boton_caja1" max="32767" attributes="0"/>
+                      <Component id="boton_caja" max="32767" attributes="0"/>
                       <Component id="boton_venta" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -76,7 +76,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="boton_usuarios" min="-2" pref="51" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="boton_caja1" min="-2" pref="45" max="-2" attributes="0"/>
+                  <Component id="boton_caja" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="boton_venta" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace pref="331" max="32767" attributes="0"/>
@@ -160,7 +160,7 @@
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="boton_ventaMousePressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="boton_caja1">
+        <Component class="javax.swing.JLabel" name="boton_caja">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f" green="2e" red="0" type="rgb"/>
@@ -170,7 +170,13 @@
               <Image iconType="3" name="/com/images/kisspng-cash-register-computer-icons-money-payment-point-o-5af3897e79ef57.5804234915259098864995 (1).png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="CAJA"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="boton_cajaMousePressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
