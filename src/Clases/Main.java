@@ -19,7 +19,7 @@ public class Main {
     public static float iva;
     public static int provilegio;
     public static Controlador controlador = new Controlador();
-    
+    public static String usuarioActual;
     
     
     

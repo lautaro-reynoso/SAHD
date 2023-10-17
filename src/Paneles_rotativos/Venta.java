@@ -1099,8 +1099,16 @@ public class Venta extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe ingresar al menos un producto que desea vender");
         }else{
             try {
-                recorreryeliminar();
-                tf_total.setText("");
+                String user  =  Main.usuarioActual;
+                ResultSet res;
+                res = peticiones.CajaAbierta(user);
+                if (res.next()) {
+                    recorreryeliminar();
+                    tf_total.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe abrir una caja para poder realizar una venta.");
+                }
+                
             } catch (SQLException ex) {
                 Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
             }

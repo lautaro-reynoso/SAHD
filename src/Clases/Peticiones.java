@@ -114,5 +114,12 @@ public class Peticiones {
 
         return Main.conexion.EjecutarConsultaSQL(sql);
     }
+    
+    public ResultSet CajaAbierta (String user){
+        
+        String sql = "SELECT * FROM caja_abierta WHERE usuario = '" + user + "'";
+
+        return Main.conexion.EjecutarConsultaSQL(sql);
+    }
            
 }

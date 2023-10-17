@@ -1,5 +1,6 @@
 package Paneles_principales;
 
+import Clases.Main;
 import Clases.Peticiones;
 import java.awt.Color;
 
@@ -289,6 +290,7 @@ public class Login extends javax.swing.JFrame {
         ResultSet res = peticion.login(usuario, pass);
 
         if (res.next()) {
+            Main.usuarioActual  = userTxt.getText();
             Principal principal = new Principal();
             principal.setVisible(true); //Show other frame
             super.dispose();
